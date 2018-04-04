@@ -7,14 +7,17 @@ import  'rxjs/add/operator/map';
 @Injectable()
 export class WebService {
 
-  private serviceUrl='http://localhost:48116/RecuruitmentService.asmx';
+  private serviceUrl='http://localhost:48116/RecruitmentService.asmx';
 
   constructor(private http:Http) { }
 
 
-// getting Martial details 
-saveAddress(){
-  let paramData={name:"Mass"}
+// getting adding address details
+saveAddress(name,address){
+  const addr= JSON.stringify(address);
+  console.log(addr);
+  // let paramData={name:name}
+  let paramData={name:name,address:addr}
   return this.http.get(this.serviceUrl+'/addAddress',{params: paramData}).map(this.extractData);
 }
 
@@ -24,7 +27,8 @@ private extractData(res: Response) {
 
 }
 
-/**
+/** for--------
+ * // let paramData={name:name}
  * Web Service code
  * --asmx file--
  *  [WebMethod]
@@ -60,8 +64,69 @@ private extractData(res: Response) {
             }
            
         }
- * 
- */
+
+        ------------------------------------------------------------------------------------------------
+         /**
+           This method pass the name as string and Form array as Object
+        */
+
+      
+       /**
+       [WebMethod]
+       public void addAddress(string name, string address)
+       {
+           int res = -9;
+
+           try
+           {
+               Address[] addr = JsonConvert.DeserializeObject<Address[]>(address);
+               Address addre = new Address();
+               foreach (var dd in addr)
+               {
+                   Debug.WriteLine("Street Name is" + dd.streetName);
+
+                   addre.name = name;
+                   addre.streetName = dd.streetName;
+                   addre.area = dd.area;
+                   em.Addresses.Add(addre);
+                   res = em.SaveChanges();
+               }
+               // if sucessful insertion 
+               if (res > 0)
+               {
+                   int k = 2;
+                   JavaScriptSerializer js = new JavaScriptSerializer();
+                   Context.Response.Clear();
+                   Context.Response.ContentType = "application/json";
+                   Context.Response.Write(js.Serialize(k));
+                   Debug.WriteLine("Address Data Sucessfully Inserted");
+               }
+               else
+               {
+                   Debug.WriteLine("Address Data Not Inserted");
+               }
+
+               /**
+                 if Not in array format "[{"x":"y","l":"m"}]"
+               */
+               //var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(address);
+               //foreach (var kv in dict)
+               //{
+
+               //    Debug.WriteLine("Key Value Pair is" + kv.Key + ":" + kv.Value);
+
+               //    Debug.WriteLine("Value is" + kv.Value);
+               //}
+          // }
+         //  catch (Exception e)
+        //   {
+             //  Debug.WriteLine(e.Message);
+        //   }
+
+
+        //  }
+       
+
 
 /**
  * Web Config code

@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
 
   initAddress(){
     return this.fb.group({
-      street_name:[],
+      streetName:[],
       area:[]
     });
   }
@@ -47,12 +47,23 @@ export class AppComponent implements OnInit {
 
 onSubmit(){
 
-  this.webService.saveAddress().subscribe(
+  console.log("Name in App Component value is"+this.appForm.controls['name'].value);
+  console.log("address in App Component value is"+this.appForm.get('addresses').value);
+  //console.log(this.addresses.value); 
+
+  this.webService.saveAddress(this.appForm.controls['name'].value,this.appForm.controls['addresses'].value).subscribe(
     (data:Response) =>console.log(data),
-    error => console.error(error)
+    error => console.error(error),
     //completed => console.log("Operation completed")
 );
-  console.log(this.appForm.value);
+
+
+//   this.webService.saveAddress().subscribe(
+//     (data:Response) =>console.log(data),
+//     error => console.error(error)
+//     //completed => console.log("Operation completed")
+// );
+ // console.log(this.appForm.value);
 }
 
 }
