@@ -25,6 +25,19 @@ private extractData(res: Response) {
   return res.text() ? res.json() : {}; 
 }
 
+
+// Getting examination Details
+getExaminationdetails(){
+    return this.http.get(this.serviceUrl+'/getExaminationDetails').map(this.extractData);
+}
+
+//Getting examination Stage Details
+getExaminationStagedetails(id){
+  let paramExamData={id:id};
+  return this.http.get(this.serviceUrl+'/getExaminationStages',{params:paramExamData}).map(this.extractData);
+}
+
+
 }
 
 /** for--------
@@ -153,5 +166,4 @@ private extractData(res: Response) {
     </httpProtocol>
   </system.webServer>
 
- * 
- */
+**/

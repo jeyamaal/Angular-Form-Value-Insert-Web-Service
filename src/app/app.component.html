@@ -28,6 +28,20 @@
             </div>
           </div>
           <button type="submit" class="btn btn-success" >Save</button>
+
+         <br><br>
+        
+         <label>Exam Details</label>
+         <select formControlName="examDetail">
+           <option *ngFor= "let exam of examData" [value]="exam.ID">{{exam.Name}}</option>
+         </select>
+
+         <br><br>
+         <select formControlName="examStage">
+            <option *ngFor= "let examStage of examStageData" value="examStage.ID">{{examStage.Descriptions}}</option>
+          </select>
+ 
+
   
   </form>
 
